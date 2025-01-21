@@ -393,6 +393,74 @@ footer a {
 	color: #888;
 }
 
+/* Parameter page styles */
+.param-block {
+    background-color: var(--secondary-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+
+.param-block h3 {
+    color: var(--primary-color);
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 1rem;
+}
+
+.param-table {
+    overflow-x: auto;
+}
+
+.param-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.param-table th {
+    background-color: var(--code-background);
+    color: var(--primary-color);
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: bold;
+}
+
+.param-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.param-table tr:last-child td {
+    border-bottom: none;
+}
+
+.param-table td:first-child {
+    color: var(--primary-color);
+    font-family: 'Fira Code', monospace;
+}
+
+.param-table td:nth-child(2) {
+    color: #888;
+}
+
+.param-table td:nth-child(3) {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .param-table {
+        margin: 0 -1rem;
+    }
+    
+    .param-table table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
 @media (max-width: 768px) {
 	.nav-content {
 		flex-direction: column;

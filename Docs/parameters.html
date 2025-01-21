@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Parameters - Discord Bot Utils</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+	<nav>
+		<div class="nav-content">
+			<div class="nav-left">
+				<div class="nav-brand">Discord Bot Utils</div>
+				<div class="theme-switch">
+					<input type="checkbox" id="theme-toggle">
+					<label for="theme-toggle">
+						<i class="fas fa-sun icon" id="light-icon"></i>
+						<i class="fas fa-moon icon" id="dark-icon" style="display: none;"></i>
+					</label>
+				</div>
+			</div>
+			<div class="nav-right">
+				<div class="search-container">
+					<i class="fas fa-search search-icon"></i>
+					<input type="text" class="search-input" placeholder="Search parameters...">
+				</div>
+				<div class="nav-links">
+					<a href="index.html">Home</a>
+					<a href="api.html">API</a>
+					<a href="examples.html">Examples</a>
+					<a href="parameters.html">Parameters</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="sidebar">
+		<div class="sidebar-item">
+			<a href="#moderation-params">Moderation Parameters</a>
+			<a href="#interaction-params">Interaction Parameters</a>
+			<a href="#logger-params">Logger Parameters</a>
+			<a href="#command-params">Command Parameters</a>
+		</div>
+	</div>
+
+	<main>
+		<section id="moderation-params">
+			<h2>Moderation Parameters</h2>
+			
+			<div class="param-block">
+				<h3>timeout(member, duration, reason)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>member</td>
+							<td>GuildMember</td>
+							<td>Yes</td>
+							<td>The Discord.js GuildMember to timeout</td>
+						</tr>
+						<tr>
+							<td>duration</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Timeout duration in seconds</td>
+						</tr>
+						<tr>
+							<td>reason</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Reason for the timeout</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>clearMessages(channel, amount, filter)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>channel</td>
+							<td>TextChannel</td>
+							<td>Yes</td>
+							<td>The Discord.js TextChannel to clear messages from</td>
+						</tr>
+						<tr>
+							<td>amount</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Number of messages to delete (max 100)</td>
+						</tr>
+						<tr>
+							<td>filter</td>
+							<td>Object</td>
+							<td>No</td>
+							<td>Filter options (user, contains, beforeDate)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="interaction-params">
+			<h2>Interaction Parameters</h2>
+			
+			<div class="param-block">
+				<h3>createPoll(question, options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>question</td>
+							<td>String</td>
+							<td>Yes</td>
+							<td>The poll question to display</td>
+						</tr>
+						<tr>
+							<td>options</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of poll options (max 10)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>getRoleInfo(role)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>role</td>
+							<td>Role</td>
+							<td>Yes</td>
+							<td>The Discord.js Role object to get info about</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="logger-params">
+			<h2>Logger Parameters</h2>
+			
+			<div class="param-block">
+				<h3>initialize(options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>logDirectory</td>
+							<td>String</td>
+							<td>Yes</td>
+							<td>Directory to store log files</td>
+						</tr>
+						<tr>
+							<td>webhookUrl</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Discord webhook URL for logs</td>
+						</tr>
+						<tr>
+							<td>errorWebhookUrl</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Separate webhook URL for errors</td>
+						</tr>
+						<tr>
+							<td>maxLogAge</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Days to keep logs (default: 7)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="command-params">
+			<h2>Command Parameters</h2>
+			
+			<div class="param-block">
+				<h3>Command Handler Options</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>permissions</td>
+							<td>Array</td>
+							<td>No</td>
+							<td>Array of required permissions</td>
+						</tr>
+						<tr>
+							<td>cooldown</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Command cooldown in seconds</td>
+						</tr>
+						<tr>
+							<td>roleIds</td>
+							<td>Array</td>
+							<td>No</td>
+							<td>Array of required role IDs</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<p>Created by ZerroDevs | <a href="https://github.com/ZerroDevs/discord-bot-utils">GitHub</a></p>
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
