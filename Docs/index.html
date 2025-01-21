@@ -6,15 +6,33 @@
 	<title>Discord Bot Utils Documentation</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 	<nav>
-		<div class="nav-brand">Discord Bot Utils</div>
-		<div class="nav-links">
-			<a href="#getting-started">Getting Started</a>
-			<a href="#features">Features</a>
-			<a href="#examples">Examples</a>
-			<a href="api.html">API</a>
+		<div class="nav-content">
+			<div class="nav-left">
+				<div class="nav-brand">Discord Bot Utils</div>
+				<div class="theme-switch">
+					<input type="checkbox" id="theme-toggle">
+					<label for="theme-toggle">
+						<i class="fas fa-sun icon" id="light-icon"></i>
+						<i class="fas fa-moon icon" id="dark-icon" style="display: none;"></i>
+					</label>
+				</div>
+			</div>
+			<div class="nav-right">
+				<div class="search-container">
+					<i class="fas fa-search search-icon"></i>
+					<input type="text" class="search-input" placeholder="Search documentation...">
+				</div>
+				<div class="nav-links">
+					<a href="#getting-started">Getting Started</a>
+					<a href="#features">Features</a>
+					<a href="#examples">Examples</a>
+					<a href="api.html">API</a>
+				</div>
+			</div>
 		</div>
 	</nav>
 
@@ -219,4 +237,5 @@ client.on('interactionCreate', async interaction => {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
+
 </html>

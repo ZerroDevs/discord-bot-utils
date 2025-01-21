@@ -57,8 +57,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 	});
 });
 
-// Initialize active section on page load
+// Theme management
+function setTheme(theme) {
+	document.documentElement.setAttribute('data-theme', theme);
+	localStorage.setItem('theme', theme);
+	
+	const lightIcon = document.getElementById('light-icon');
+	const darkIcon = document.getElementById('dark-icon');
+	const themeToggle = document.getElementById('theme-toggle');
+	
+	if (theme === 'dark') {
+		lightIcon.style.display = 'none';
+		darkIcon.style.display = 'block';
+		themeToggle.checked = true;
+	} else {
+		lightIcon.style.display = 'block';
+		darkIcon.style.display = 'none';
+		themeToggle.checked = false;
+	}
+}
+
+// Initialize theme and active section on page load
 document.addEventListener('DOMContentLoaded', () => {
+	const savedTheme = localStorage.getItem('theme') || 'light';
+	setTheme(savedTheme);
+
+	// Theme toggle functionality
+	const themeToggle = document.getElementById('theme-toggle');
+	themeToggle.addEventListener('change', () => {
+		setTheme(themeToggle.checked ? 'dark' : 'light');
+	});
+
 	updateActiveSection();
 	
 	// Handle initial hash in URL
@@ -120,13 +149,7 @@ const copyToClipboard = text => {
 };
 
 // Search functionality
-const searchInput = document.createElement('input');
-searchInput.type = 'text';
-searchInput.placeholder = 'Search documentation...';
-searchInput.className = 'search-input';
-document.querySelector('.nav-links').prepend(searchInput);
-
-searchInput.addEventListener('input', (e) => {
+document.querySelector('.search-input').addEventListener('input', (e) => {
 	const searchTerm = e.target.value.toLowerCase();
 	const sections = document.querySelectorAll('section');
 	
