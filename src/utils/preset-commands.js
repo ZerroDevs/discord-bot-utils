@@ -1,5 +1,6 @@
 const { EmbedUtil } = require('./embed');
 const { TaxUtil } = require('../index');
+const { ModerationUtil } = require('../index');
 const { PermissionFlagsBits } = require('discord.js');
 
 class PresetCommands {
@@ -97,6 +98,95 @@ class PresetCommands {
 			return interaction.reply({ embeds: [TaxUtil.createTaxEmbed(taxInfo)] });
 		}
 	}
+
+	static async handleTimeout(interaction) {
+		const member = interaction.options.getMember('user');
+		const duration = interaction.options.getString('duration');
+		const reason = interaction.options.getString('reason') || 'No reason provided';
+
+		if (!ModerationUtil.validateModPermissions(interaction.member, PermissionFlagsBits.ModerateMembers)) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('You do not have permission to timeout members!')],
+				ephemeral: true 
+			});
+		}
+
+		const parsedDuration = ModerationUtil.parseDuration(duration);
+		if (!parsedDuration) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('Invalid duration format! Use 1s, 1m, 1h, or 1d')],
+				ephemeral: true 
+			});
+		}
+
+		const success = await ModerationUtil.timeout(member, parsedDuration, reason);
+		if (success) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createSuccessEmbed(`Successfully timed out ${member.user.tag} for ${duration}\nReason: ${reason}`)]
+			});
+		} else {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('Failed to timeout the user!')],
+				ephemeral: true 
+			});
+		}
+	}
+
+	static async handleClear(interaction) {
+		const amount = interaction.options.getInteger('amount');
+		const user = interaction.options.getUser('user');
+		const contains = interaction.options.getString('contains');
+
+		if (!ModerationUtil.validateModPermissions(interaction.member, PermissionFlagsBits.ManageMessages)) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('You do not have permission to manage messages!')],
+				ephemeral: true 
+			});
+		}
+
+		const filter = {
+			user: user || null,
+			contains: contains || null
+		};
+
+		const deleted = await ModerationUtil.clearMessages(interaction.channel, amount, filter);
+		return interaction.reply({ 
+			embeds: [EmbedUtil.createSuccessEmbed(`Successfully deleted ${deleted} messages`)],
+			ephemeral: true 
+		});
+	}
+
+	static async handleSlowmode(interaction) {
+		const duration = interaction.options.getString('duration');
+
+		if (!ModerationUtil.validateModPermissions(interaction.member, PermissionFlagsBits.ManageChannels)) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('You do not have permission to manage channels!')],
+				ephemeral: true 
+			});
+		}
+
+		const parsedDuration = ModerationUtil.parseDuration(duration);
+		if (!parsedDuration) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('Invalid duration format! Use 1s, 1m, 1h, or 1d')],
+				ephemeral: true 
+			});
+		}
+
+		const success = await ModerationUtil.setSlowmode(interaction.channel, parsedDuration);
+		if (success) {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createSuccessEmbed(`Set slowmode to ${duration}`)]
+			});
+		} else {
+			return interaction.reply({ 
+				embeds: [EmbedUtil.createErrorEmbed('Failed to set slowmode!')],
+				ephemeral: true 
+			});
+		}
+	}
+
 
 
 	static getPresetCommands() {
@@ -197,6 +287,66 @@ class PresetCommands {
 							{ name: 'Embed', value: 'embed' },
 							{ name: 'Message', value: 'message' }
 						]
+					}
+				]
+			},
+			{
+				name: 'timeout',
+				description: 'Timeout a user',
+				options: [
+					{
+						name: 'user',
+						type: 6,
+						description: 'The user to timeout',
+						required: true
+					},
+					{
+						name: 'duration',
+						type: 3,
+						description: 'Duration (1s, 1m, 1h, 1d)',
+						required: true
+					},
+					{
+						name: 'reason',
+						type: 3,
+						description: 'Reason for timeout',
+						required: false
+					}
+				]
+			},
+			{
+				name: 'clear',
+				description: 'Clear messages',
+				options: [
+					{
+						name: 'amount',
+						type: 4,
+						description: 'Number of messages to delete',
+						required: true
+					},
+					{
+						name: 'user',
+						type: 6,
+						description: 'Filter messages by user',
+						required: false
+					},
+					{
+						name: 'contains',
+						type: 3,
+						description: 'Filter messages containing text',
+						required: false
+					}
+				]
+			},
+			{
+				name: 'slowmode',
+				description: 'Set channel slowmode',
+				options: [
+					{
+						name: 'duration',
+						type: 3,
+						description: 'Duration (1s, 1m, 1h, 1d)',
+						required: true
 					}
 				]
 			}

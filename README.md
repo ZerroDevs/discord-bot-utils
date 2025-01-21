@@ -165,6 +165,40 @@ await PresetCommands.handleTax(interaction, {
 });
 ```
 
+### Moderation Utilities
+- User timeout management
+- Message bulk deletion with filters
+- Channel slowmode control
+- Duration parsing (1s, 1m, 1h, 1d)
+- Permission validation
+
+```javascript
+const { ModerationUtil } = require('@ZerroDevs/discord-bot-utils');
+
+// Timeout a user
+const success = await ModerationUtil.timeout(member, 3600, 'Breaking rules'); // 1 hour timeout
+
+// Clear messages with filters
+const deleted = await ModerationUtil.clearMessages(channel, 100, {
+    user: targetUser,
+    contains: 'spam'
+});
+
+// Set channel slowmode
+await ModerationUtil.setSlowmode(channel, 30); // 30 seconds
+
+// Parse duration string
+const seconds = ModerationUtil.parseDuration('1h'); // Returns 3600
+
+// Check moderation permissions
+const canModerate = ModerationUtil.validateModPermissions(member, 'MODERATE_MEMBERS');
+```
+
+Available Moderation Commands:
+- `/timeout <user> <duration> [reason]` - Timeout a user with duration (1s, 1m, 1h, 1d)
+- `/clear <amount> [user] [contains]` - Delete messages with optional filters
+- `/slowmode <duration>` - Set channel slowmode with duration format
+
 ### Command Handler
 ```javascript
 const { CommandHandler } = require('@ZerroDevs/discord-bot-utils');
