@@ -190,6 +190,40 @@ const hasAnyRole = CommandHandler.hasAnyRole(member, roleIds);
 const hasAllRoles = CommandHandler.hasAllRoles(member, roleIds);
 ```
 
+### Logging System
+- Comprehensive error tracking and handling
+- Multiple log levels (info, warning, error, debug)
+- File-based logging with automatic cleanup
+- Discord webhook integration
+- Command execution logging
+- Global error catching
+- Custom event logging
+
+```javascript
+const { LoggerUtil } = require('@ZerroDevs/discord-bot-utils');
+
+// Initialize logger
+await LoggerUtil.initialize({
+	logDirectory: 'logs',
+	webhookUrl: 'your-webhook-url',
+	errorWebhookUrl: 'your-error-webhook-url',
+	maxLogAge: 7 // days
+});
+
+// Log different levels
+await LoggerUtil.log('info', 'Operation successful');
+await LoggerUtil.log('warning', 'Resource running low');
+await LoggerUtil.error(error, { context: 'additional info' });
+
+// Wrap commands with logging
+const wrappedCommand = LoggerUtil.createCommandLogger(async (interaction) => {
+	// Your command logic here
+});
+
+// Automatic file cleanup
+// Logs older than maxLogAge days are automatically removed
+```
+
 ### Preset Commands
 ```javascript
 const { PresetCommands } = require('@ZerroDevs/discord-bot-utils');
