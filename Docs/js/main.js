@@ -134,19 +134,50 @@ if (window.innerWidth <= 768) {
 	nav.appendChild(menuBtn);
 }
 
-// Copy to clipboard functionality
-const copyToClipboard = text => {
+// Add notification div to body
+document.body.insertAdjacentHTML('beforeend', '<div class="notification"></div>');
+const notification = document.querySelector('.notification');
+
+// Add copy buttons to all code blocks
+document.querySelectorAll('.code-block').forEach(block => {
+	const button = document.createElement('button');
+	button.className = 'code-copy-btn';
+	button.innerHTML = '<i class="fas fa-copy"></i>';
+	
+	button.addEventListener('click', async () => {
+		const code = block.querySelector('code').textContent;
+		try {
+			await navigator.clipboard.writeText(code);
+			showNotification('Code copied to clipboard!');
+		} catch (err) {
+			showNotification('Failed to copy code', true);
+		}
+	});
+	
+	block.appendChild(button);
+});
+
+// Notification function
+function showNotification(message, isError = false) {
+	notification.textContent = message;
+	notification.style.backgroundColor = isError ? '#ff4444' : getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+	notification.classList.add('show');
+	
+	setTimeout(() => {
+		notification.classList.remove('show');
+	}, 2000);
+}
+
+
+// Installation box copy functionality
+function copyToClipboard(text) {
 	navigator.clipboard.writeText(text).then(() => {
-		const btn = document.querySelector('.copy-btn');
-		const originalText = btn.textContent;
-		btn.textContent = 'Copied!';
-		setTimeout(() => {
-			btn.textContent = originalText;
-		}, 2000);
+		showNotification('Package install command copied to clipboard!');
 	}).catch(err => {
+		showNotification('Failed to copy command', true);
 		console.error('Failed to copy:', err);
 	});
-};
+}
 
 // Search functionality
 document.querySelector('.search-input').addEventListener('input', (e) => {
