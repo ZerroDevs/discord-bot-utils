@@ -7,6 +7,7 @@ const PresetCommands = require('./utils/preset-commands');
 const TaxUtil = require('./utils/tax');
 const LoggerUtil = require('./utils/logger');
 const ModerationUtil = require('./utils/moderation');
+const InteractionUtil = require('./utils/interaction');
 
 module.exports = {
 	ButtonUtil,
@@ -17,5 +18,6 @@ module.exports = {
 	PresetCommands,
 	TaxUtil,
 	LoggerUtil,
-	ModerationUtil
+	ModerationUtil,
+	InteractionUtil
 };

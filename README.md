@@ -199,6 +199,41 @@ Available Moderation Commands:
 - `/clear <amount> [user] [contains]` - Delete messages with optional filters
 - `/slowmode <duration>` - Set channel slowmode with duration format
 
+### Interaction Utilities
+- Role information and statistics
+- Interactive poll creation
+- Dynamic poll updates
+- Vote tracking and management
+- Button-based interactions
+
+```javascript
+const { InteractionUtil } = require('@ZerroDevs/discord-bot-utils');
+
+// Get role information
+const roleInfo = await InteractionUtil.getRoleInfo(role);
+const embed = InteractionUtil.createRoleInfoEmbed(roleInfo);
+
+// Create an interactive poll
+const poll = InteractionUtil.createPoll('What\'s your favorite color?', [
+	'Red', 'Blue', 'Green'
+]);
+const message = await channel.send({
+	embeds: [poll.embed],
+	components: poll.components
+});
+
+// Update poll results
+const updatedPoll = InteractionUtil.updatePollResults(interaction, votesMap);
+await message.edit({
+	embeds: [updatedPoll.embed],
+	components: updatedPoll.components
+});
+```
+
+Available Interaction Commands:
+- `/roleinfo <role>` - Display detailed role information and statistics
+- `/poll <question> [options]` - Create an interactive poll with up to 10 options (comma-separated)
+
 ### Command Handler
 ```javascript
 const { CommandHandler } = require('@ZerroDevs/discord-bot-utils');

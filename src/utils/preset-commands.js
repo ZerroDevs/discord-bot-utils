@@ -1,6 +1,7 @@
 const { EmbedUtil } = require('./embed');
 const { TaxUtil } = require('../index');
 const { ModerationUtil } = require('../index');
+const { InteractionUtil } = require('../index');
 const { PermissionFlagsBits } = require('discord.js');
 
 class PresetCommands {
@@ -155,6 +156,66 @@ class PresetCommands {
 			ephemeral: true 
 		});
 	}
+
+	static async handleRoleInfo(interaction) {
+        const role = interaction.options.getRole('role');
+        
+        try {
+            const roleInfo = await InteractionUtil.getRoleInfo(role);
+            const embed = InteractionUtil.createRoleInfoEmbed(roleInfo);
+            return interaction.reply({ embeds: [embed] });
+        } catch (error) {
+            return interaction.reply({ 
+                embeds: [EmbedUtil.createErrorEmbed('Failed to fetch role information!')],
+                ephemeral: true 
+            });
+        }
+    }
+
+    static async handlePoll(interaction) {
+        const question = interaction.options.getString('question');
+        const optionsString = interaction.options.getString('options') || 'Yes,No';
+        const options = optionsString.split(',').map(opt => opt.trim());
+
+        if (options.length > 10) {
+            return interaction.reply({ 
+                embeds: [EmbedUtil.createErrorEmbed('Maximum 10 options allowed!')],
+                ephemeral: true 
+            });
+        }
+
+        const poll = InteractionUtil.createPoll(question, options);
+        const message = await interaction.reply({ 
+            embeds: [poll.embed], 
+            components: poll.components,
+            fetchReply: true 
+        });
+
+        const votes = new Map();
+        const userVotes = new Map();
+
+        const collector = message.createMessageComponentCollector({ time: 24 * 60 * 60 * 1000 }); // 24 hours
+
+        collector.on('collect', async i => {
+            const optionIndex = parseInt(i.customId.split('_')[1]);
+            
+            // Remove previous vote if exists
+            if (userVotes.has(i.user.id)) {
+                const previousVote = userVotes.get(i.user.id);
+                votes.set(previousVote, (votes.get(previousVote) || 1) - 1);
+            }
+
+            // Add new vote
+            votes.set(optionIndex, (votes.get(optionIndex) || 0) + 1);
+            userVotes.set(i.user.id, optionIndex);
+
+            const updated = InteractionUtil.updatePollResults(i, votes);
+            await i.update({ 
+                embeds: [updated.embed], 
+                components: updated.components 
+            });
+        });
+    }
 
 	static async handleSlowmode(interaction) {
 		const duration = interaction.options.getString('duration');
@@ -347,6 +408,34 @@ class PresetCommands {
 						type: 3,
 						description: 'Duration (1s, 1m, 1h, 1d)',
 						required: true
+					}
+				]
+			},
+			{
+				name: 'roleinfo',
+				description: 'Get information about a role',
+				options: [{
+					name: 'role',
+					type: 8, // ROLE type
+					description: 'The role to get information about',
+					required: true
+				}]
+			},
+			{
+				name: 'poll',
+				description: 'Create a poll',
+				options: [
+					{
+						name: 'question',
+						type: 3,
+						description: 'The poll question',
+						required: true
+					},
+					{
+						name: 'options',
+						type: 3,
+						description: 'Comma-separated options (max 10)',
+						required: false
 					}
 				]
 			}
