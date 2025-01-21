@@ -42,6 +42,11 @@
 			<a href="#interaction-params">Interaction Parameters</a>
 			<a href="#logger-params">Logger Parameters</a>
 			<a href="#command-params">Command Parameters</a>
+			<a href="#button-params">Button Parameters</a>
+			<a href="#embed-params">Embed Parameters</a>
+			<a href="#message-params">Message Parameters</a>
+			<a href="#pagination-params">Pagination Parameters</a>
+			<a href="#tax-params">Tax Parameters</a>
 		</div>
 	</div>
 
@@ -236,6 +241,635 @@
 							<td>Array</td>
 							<td>No</td>
 							<td>Array of required role IDs</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="button-params">
+			<h2>Button Utility Parameters</h2>
+			
+			<div class="param-block">
+				<h3>createButton(options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>label</td>
+							<td>String</td>
+							<td>Yes</td>
+							<td>The text to display on the button</td>
+						</tr>
+						<tr>
+							<td>style</td>
+							<td>ButtonStyle</td>
+							<td>No</td>
+							<td>Button style (Primary, Secondary, Success, Danger, Link)</td>
+						</tr>
+						<tr>
+							<td>customId</td>
+							<td>String</td>
+							<td>Yes*</td>
+							<td>Button identifier (*Required unless URL is provided)</td>
+						</tr>
+						<tr>
+							<td>emoji</td>
+							<td>String/Emoji</td>
+							<td>No</td>
+							<td>Emoji to display on the button</td>
+						</tr>
+						<tr>
+							<td>url</td>
+							<td>String</td>
+							<td>No</td>
+							<td>URL for link buttons</td>
+						</tr>
+						<tr>
+							<td>disabled</td>
+							<td>Boolean</td>
+							<td>No</td>
+							<td>Whether the button is disabled (default: false)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createConfirmationButtons(confirmId, cancelId, confirmLabel, cancelLabel)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>confirmId</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Custom ID for confirm button (default: 'confirm')</td>
+						</tr>
+						<tr>
+							<td>cancelId</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Custom ID for cancel button (default: 'cancel')</td>
+						</tr>
+						<tr>
+							<td>confirmLabel</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Text for confirm button (default: 'Confirm')</td>
+						</tr>
+						<tr>
+							<td>cancelLabel</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Text for cancel button (default: 'Cancel')</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createMenuButtons(options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>options</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of button options (label, style, customId, emoji, disabled)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createPollButtons(options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>options</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of poll option strings</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="embed-params">
+			<h2>Embed Utility Parameters</h2>
+			
+			<div class="param-block">
+				<h3>createBasicEmbed(title, description, color)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>title</td>
+							<td>String</td>
+							<td>Yes</td>
+							<td>Title of the embed</td>
+						</tr>
+						<tr>
+							<td>description</td>
+							<td>String</td>
+							<td>Yes</td>
+							<td>Main content of the embed</td>
+						</tr>
+						<tr>
+							<td>color</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Hex color code (default: '#0099ff')</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createCustomEmbed(options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>title</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Title of the embed</td>
+						</tr>
+						<tr>
+							<td>description</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Main content of the embed</td>
+						</tr>
+						<tr>
+							<td>color</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Hex color code (default: '#0099ff')</td>
+						</tr>
+						<tr>
+							<td>fields</td>
+							<td>Array</td>
+							<td>No</td>
+							<td>Array of field objects {name, value, inline}</td>
+						</tr>
+						<tr>
+							<td>thumbnail</td>
+							<td>String</td>
+							<td>No</td>
+							<td>URL for the thumbnail image</td>
+						</tr>
+						<tr>
+							<td>image</td>
+							<td>String</td>
+							<td>No</td>
+							<td>URL for the main image</td>
+						</tr>
+						<tr>
+							<td>footer</td>
+							<td>Object</td>
+							<td>No</td>
+							<td>Footer object {text, iconURL}</td>
+						</tr>
+						<tr>
+							<td>author</td>
+							<td>Object</td>
+							<td>No</td>
+							<td>Author object {name, iconURL, url}</td>
+						</tr>
+						<tr>
+							<td>url</td>
+							<td>String</td>
+							<td>No</td>
+							<td>URL for embed title</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>Preset Embed Methods</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Method</th>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>createErrorEmbed</td>
+							<td>message</td>
+							<td>String</td>
+							<td>Creates red error embed</td>
+						</tr>
+						<tr>
+							<td>createSuccessEmbed</td>
+							<td>message</td>
+							<td>String</td>
+							<td>Creates green success embed</td>
+						</tr>
+						<tr>
+							<td>createWarningEmbed</td>
+							<td>message</td>
+							<td>String</td>
+							<td>Creates yellow warning embed</td>
+						</tr>
+						<tr>
+							<td>createInfoEmbed</td>
+							<td>message</td>
+							<td>String</td>
+							<td>Creates blue info embed</td>
+						</tr>
+						<tr>
+							<td>createLoadingEmbed</td>
+							<td>message</td>
+							<td>String</td>
+							<td>Creates orange loading embed</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="message-params">
+			<h2>Message Utility Parameters</h2>
+			
+			<div class="param-block">
+				<h3>sendTemporaryMessage(channel, content, duration)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>channel</td>
+							<td>TextChannel</td>
+							<td>Yes</td>
+							<td>Discord.js channel to send message to</td>
+						</tr>
+						<tr>
+							<td>content</td>
+							<td>String/Object</td>
+							<td>Yes</td>
+							<td>Message content or message options</td>
+						</tr>
+						<tr>
+							<td>duration</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Time in ms before deletion (default: 5000)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createTypingEffect(channel, messages, options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>channel</td>
+							<td>TextChannel</td>
+							<td>Yes</td>
+							<td>Discord.js channel for typing effect</td>
+						</tr>
+						<tr>
+							<td>messages</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of messages to send sequentially</td>
+						</tr>
+						<tr>
+							<td>options</td>
+							<td>Object</td>
+							<td>No</td>
+							<td>Configuration options object</td>
+						</tr>
+						<tr>
+							<td>options.interval</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Time between messages (default: 2000ms)</td>
+						</tr>
+						<tr>
+							<td>options.typingDuration</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Duration of typing indicator (default: 1000ms)</td>
+						</tr>
+						<tr>
+							<td>options.deleteAfter</td>
+							<td>Boolean</td>
+							<td>No</td>
+							<td>Whether to delete messages (default: false)</td>
+						</tr>
+						<tr>
+							<td>options.deleteDelay</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Delay before deletion (default: 5000ms)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createCountdown(interaction, seconds, options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>interaction</td>
+							<td>Interaction</td>
+							<td>Yes</td>
+							<td>Discord.js interaction object</td>
+						</tr>
+						<tr>
+							<td>seconds</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Duration of countdown in seconds</td>
+						</tr>
+						<tr>
+							<td>options.startMessage</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Initial message (default: 'Countdown started!')</td>
+						</tr>
+						<tr>
+							<td>options.endMessage</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Final message (default: 'Time's up!')</td>
+						</tr>
+						<tr>
+							<td>options.updateInterval</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Update frequency in ms (default: 1000)</td>
+						</tr>
+						<tr>
+							<td>options.embedColor</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Embed color (default: '#0099ff')</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createProgressBar(current, max, length, filledChar, emptyChar)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>current</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Current progress value</td>
+						</tr>
+						<tr>
+							<td>max</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Maximum progress value</td>
+						</tr>
+						<tr>
+							<td>length</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Bar length in characters (default: 10)</td>
+						</tr>
+						<tr>
+							<td>filledChar</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Character for filled portion (default: '▓')</td>
+						</tr>
+						<tr>
+							<td>emptyChar</td>
+							<td>String</td>
+							<td>No</td>
+							<td>Character for empty portion (default: '░')</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="pagination-params">
+			<h2>Pagination Parameters</h2>
+			
+			<div class="param-block">
+				<h3>createPagination(interaction, pages, options)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>interaction</td>
+							<td>Interaction</td>
+							<td>Yes</td>
+							<td>Discord.js interaction object</td>
+						</tr>
+						<tr>
+							<td>pages</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of embed pages to paginate</td>
+						</tr>
+						<tr>
+							<td>options.timeout</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Collector timeout in ms (default: 60000)</td>
+						</tr>
+						<tr>
+							<td>options.startPage</td>
+							<td>Number</td>
+							<td>No</td>
+							<td>Initial page index (default: 0)</td>
+						</tr>
+						<tr>
+							<td>options.showPageNumbers</td>
+							<td>Boolean</td>
+							<td>No</td>
+							<td>Show page numbers in footer (default: true)</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>createMenuPagination(interaction, pages, menuOptions)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>interaction</td>
+							<td>Interaction</td>
+							<td>Yes</td>
+							<td>Discord.js interaction object</td>
+						</tr>
+						<tr>
+							<td>pages</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of embed pages to display</td>
+						</tr>
+						<tr>
+							<td>menuOptions</td>
+							<td>Array</td>
+							<td>Yes</td>
+							<td>Array of button options for menu</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="tax-params">
+			<h2>Tax Parameters</h2>
+			
+			<div class="param-block">
+				<h3>calculateTax(amount, taxRate)</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Parameter</th>
+							<th>Type</th>
+							<th>Required</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>amount</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Original amount to calculate tax on</td>
+						</tr>
+						<tr>
+							<td>taxRate</td>
+							<td>Number</td>
+							<td>Yes</td>
+							<td>Tax rate percentage (e.g., 15 for 15%)</td>
+						</tr>
+					</table>
+				</div>
+				<div class="param-table">
+					<h4>Returns:</h4>
+					<table>
+						<tr>
+							<th>Property</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>originalAmount</td>
+							<td>Number</td>
+							<td>Input amount before tax</td>
+						</tr>
+						<tr>
+							<td>taxAmount</td>
+							<td>Number</td>
+							<td>Calculated tax amount</td>
+						</tr>
+						<tr>
+							<td>totalAmount</td>
+							<td>Number</td>
+							<td>Total amount including tax</td>
+						</tr>
+						<tr>
+							<td>taxRate</td>
+							<td>Number</td>
+							<td>Applied tax rate percentage</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="param-block">
+				<h3>Display Methods</h3>
+				<div class="param-table">
+					<table>
+						<tr>
+							<th>Method</th>
+							<th>Parameter</th>
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td>createTaxMessageResponse</td>
+							<td>taxInfo</td>
+							<td>Creates formatted text response</td>
+						</tr>
+						<tr>
+							<td>createTaxEmbed</td>
+							<td>taxInfo</td>
+							<td>Creates embedded message with tax details</td>
 						</tr>
 					</table>
 				</div>
