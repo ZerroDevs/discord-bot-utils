@@ -1,0 +1,49 @@
+{
+  "name": "@ZerroDevs/discord-bot-utils",
+  "version": "1.0.0",
+  "description": "A comprehensive utility package for Discord.js bots providing common features and helpers",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node examples/unified-bot.js"
+  },
+  "keywords": [
+    "discord.js",
+    "discord-bot",
+    "utilities",
+    "bot-tools",
+    "discord-utilities",
+    "pagination",
+    "embeds",
+    "buttons",
+    "cooldown"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "@discordjs/rest": "^1.7.1",
+    "discord-api-types": "^0.37.42"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZerroDevs/discord-bot-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ZerroDevs/discord-bot-utils/issues"
+  },
+  "engines": {
+    "node": ">=16.9.0"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
