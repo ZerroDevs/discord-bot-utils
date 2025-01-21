@@ -19,15 +19,17 @@ jobs:
 				with:
 					node-version: '16.x'
 					registry-url: 'https://npm.pkg.github.com'
-					scope: '@zerrodevs'
+					
+			- name: Configure npm
+				run: |
+					echo "@zerrodevs:registry=https://npm.pkg.github.com" >> .npmrc
+					echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
 			
 			- name: Install dependencies
 				run: npm install
 			
-			- name: Build
-				run: npm run build --if-present
-			
 			- name: Publish to GitHub Packages
-				run: npm publish
+				run: npm publish --access public
 				env:
 					NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+					NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
