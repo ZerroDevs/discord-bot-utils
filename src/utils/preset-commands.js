@@ -1,4 +1,5 @@
 const { EmbedUtil } = require('./embed');
+const { TaxUtil } = require('../index');
 const { PermissionFlagsBits } = require('discord.js');
 
 class PresetCommands {
@@ -83,6 +84,21 @@ class PresetCommands {
 		}
 	}
 
+	static async handleTax(interaction, options = { userDefined: false, fixedRate: 15 }) {
+		const amount = interaction.options.getNumber('amount');
+		const taxRate = options.userDefined ? interaction.options.getNumber('tax_rate') : options.fixedRate;
+		const displayType = interaction.options.getString('display') || 'embed';
+
+		const taxInfo = TaxUtil.calculateTax(amount, taxRate);
+
+		if (displayType === 'message') {
+			return interaction.reply(TaxUtil.createTaxMessageResponse(taxInfo));
+		} else {
+			return interaction.reply({ embeds: [TaxUtil.createTaxEmbed(taxInfo)] });
+		}
+	}
+
+
 	static getPresetCommands() {
 		return [
 			{
@@ -155,6 +171,34 @@ class PresetCommands {
 					description: 'The URL to shorten',
 					required: true
 				}]
+			},
+			{
+				name: 'tax',
+				description: 'Calculate tax on an amount',
+				options: [
+					{
+						name: 'amount',
+						type: 10, // NUMBER type
+						description: 'The amount to calculate tax on',
+						required: true
+					},
+					{
+						name: 'tax_rate',
+						type: 10,
+						description: 'Custom tax rate percentage',
+						required: false
+					},
+					{
+						name: 'display',
+						type: 3, // STRING type
+						description: 'Display style (embed/message)',
+						required: false,
+						choices: [
+							{ name: 'Embed', value: 'embed' },
+							{ name: 'Message', value: 'message' }
+						]
+					}
+				]
 			}
 		];
 	}

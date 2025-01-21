@@ -4,6 +4,7 @@ const EmbedUtil = require('./utils/embed');
 const MessageUtil = require('./utils/message');
 const PaginationHandler = require('./utils/pagination');
 const PresetCommands = require('./utils/preset-commands');
+const TaxUtil = require('./utils/tax');
 
 module.exports = {
 	ButtonUtil,
@@ -11,5 +12,6 @@ module.exports = {
 	EmbedUtil,
 	MessageUtil,
 	PaginationHandler,
-	PresetCommands
+	PresetCommands,
+	TaxUtil
 };

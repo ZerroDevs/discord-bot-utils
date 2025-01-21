@@ -39,6 +39,12 @@ A comprehensive utility package for Discord.js bots that provides advanced featu
 - Countdown timers
 - Reaction collectors
 
+### Tax Utilities
+- Fixed and user-defined tax rate calculations
+- Embed and message display options
+- Customizable tax rate presets
+- Automatic total calculation
+
 ### Command Handler Utilities
 - Permission validation
 - Cooldown management
@@ -134,6 +140,31 @@ await MessageUtil.createCountdown(interaction, 60, {
 const progress = MessageUtil.createProgressBar(7, 10); // "ZerroDevs"
 ```
 
+### Tax Calculator
+```javascript
+const { TaxUtil } = require('@ZerroDevs/discord-bot-utils');
+
+// Calculate tax with fixed rate
+const taxInfo = TaxUtil.calculateTax(1000, 15); // 15% tax rate
+
+// Display as message
+const messageResponse = TaxUtil.createTaxMessageResponse(taxInfo);
+
+// Display as embed
+const embedResponse = TaxUtil.createTaxEmbed(taxInfo);
+
+// Using preset command with fixed rate
+await PresetCommands.handleTax(interaction, { 
+	userDefined: false, 
+	fixedRate: 15 
+});
+
+// Using preset command with user-defined rate
+await PresetCommands.handleTax(interaction, { 
+	userDefined: true 
+});
+```
+
 ### Command Handler
 ```javascript
 const { CommandHandler } = require('@ZerroDevs/discord-bot-utils');
@@ -196,6 +227,8 @@ Available Preset Commands:
 - `/kick <user> [reason]` - Kick a member with optional reason
 - `/ban <user> [reason] [days]` - Ban a user with optional reason and message deletion days
 - `/shortlink <url>` - Create a shortened URL using TinyURL
+- `/tax-fixed <amount> [display]` - Calculate tax with fixed rate (15%)
+- `/tax-custom <amount> <tax_rate> [display]` - Calculate tax with custom rate
 
 ## Example Bot
 Check the `examples` directory for a complete example bot showcasing all features.

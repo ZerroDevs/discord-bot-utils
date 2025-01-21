@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits, REST, Routes, ButtonStyle } = require('discord.js');
-const { ButtonUtil, CommandHandler, EmbedUtil, MessageUtil, PaginationHandler, PresetCommands } = require('../src/index.js');
+const { ButtonUtil, CommandHandler, EmbedUtil, MessageUtil, PaginationHandler, PresetCommands, TaxUtil } = require('../src/index.js');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
@@ -35,6 +35,14 @@ const commands = [
 	{
 		name: 'userinfo',
 		description: 'Show user information'
+	},
+	{
+		name: 'tax-fixed',
+		description: 'Calculate tax with fixed rate (15%)'
+	},
+	{
+		name: 'tax-custom',
+		description: 'Calculate tax with custom rate'
 	}
 ];
 
@@ -131,6 +139,14 @@ client.on('interactionCreate', async interaction => {
 			case 'userinfo':
 				const userEmbed = EmbedUtil.createUserInfoEmbed(interaction.member);
 				await interaction.reply({ embeds: [userEmbed] });
+				break;
+
+			case 'tax-fixed':
+				await PresetCommands.handleTax(interaction, { userDefined: false, fixedRate: 15 });
+				break;
+
+			case 'tax-custom':
+				await PresetCommands.handleTax(interaction, { userDefined: true });
 				break;
 		}
 	} catch (error) {
