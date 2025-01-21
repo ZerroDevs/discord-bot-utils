@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node examples/unified-bot.js"
+    "start": "node examples/unified-bot.js",
+    "build": "echo \"No build required\""
   },
   "keywords": [
     "discord.js",
@@ -45,6 +46,7 @@
     "LICENSE"
   ],
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   }
 }
