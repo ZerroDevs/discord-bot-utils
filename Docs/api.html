@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>API Reference - Discord Bot Utils</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+</head>
+<body>
+	<nav>
+		<div class="nav-brand">Discord Bot Utils</div>
+		<div class="nav-links">
+			<a href="index.html">Home</a>
+			<a href="api.html">API</a>
+			<a href="examples.html">Examples</a>
+		</div>
+	</nav>
+
+	<div class="sidebar">
+		<div class="sidebar-item">
+			<a href="#moderation-api">ModerationUtil</a>
+			<a href="#interaction-api">InteractionUtil</a>
+			<a href="#logger-api">LoggerUtil</a>
+			<a href="#preset-commands">PresetCommands</a>
+		</div>
+	</div>
+
+	<main>
+		<section id="moderation-api">
+			<h2>ModerationUtil API</h2>
+			
+			<div class="api-method">
+				<h3>timeout(member, duration, reason)</h3>
+				<p>Timeout a guild member for a specified duration.</p>
+				<div class="params">
+					<h4>Parameters:</h4>
+					<ul>
+						<li><code>member</code> - Discord.js GuildMember object</li>
+						<li><code>duration</code> - Timeout duration in seconds</li>
+						<li><code>reason</code> - (Optional) Reason for timeout</li>
+					</ul>
+				</div>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const success = await ModerationUtil.timeout(member, 3600, 'Breaking rules');
+					</code></pre>
+				</div>
+			</div>
+
+			<div class="api-method">
+				<h3>clearMessages(channel, amount, filter)</h3>
+				<p>Bulk delete messages with optional filtering.</p>
+				<div class="params">
+					<h4>Parameters:</h4>
+					<ul>
+						<li><code>channel</code> - Discord.js TextChannel object</li>
+						<li><code>amount</code> - Number of messages to delete</li>
+						<li><code>filter</code> - (Optional) Filter options object</li>
+					</ul>
+				</div>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const deleted = await ModerationUtil.clearMessages(channel, 100, {
+	user: targetUser,
+	contains: 'spam'
+});
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section id="interaction-api">
+			<h2>InteractionUtil API</h2>
+			
+			<div class="api-method">
+				<h3>createPoll(question, options)</h3>
+				<p>Create an interactive poll with buttons.</p>
+				<div class="params">
+					<h4>Parameters:</h4>
+					<ul>
+						<li><code>question</code> - Poll question string</li>
+						<li><code>options</code> - Array of option strings</li>
+					</ul>
+				</div>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const poll = InteractionUtil.createPoll('Favorite color?', ['Red', 'Blue']);
+					</code></pre>
+				</div>
+			</div>
+
+			<div class="api-method">
+				<h3>getRoleInfo(role)</h3>
+				<p>Get detailed information about a role.</p>
+				<div class="params">
+					<h4>Parameters:</h4>
+					<ul>
+						<li><code>role</code> - Discord.js Role object</li>
+					</ul>
+				</div>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const roleInfo = await InteractionUtil.getRoleInfo(role);
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section id="logger-api">
+			<h2>LoggerUtil API</h2>
+			
+			<div class="api-method">
+				<h3>initialize(options)</h3>
+				<p>Initialize the logging system.</p>
+				<div class="params">
+					<h4>Options:</h4>
+					<ul>
+						<li><code>logDirectory</code> - Directory for log files</li>
+						<li><code>webhookUrl</code> - Discord webhook URL for logs</li>
+						<li><code>errorWebhookUrl</code> - Webhook URL for errors</li>
+					</ul>
+				</div>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+await LoggerUtil.initialize({
+	logDirectory: 'logs',
+	webhookUrl: 'your-webhook-url'
+});
+					</code></pre>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<p>Created by ZerroDevs | <a href="https://github.com/ZerroDevs/discord-bot-utils">GitHub</a></p>
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

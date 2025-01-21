@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Examples - Discord Bot Utils</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+</head>
+<body>
+	<nav>
+		<div class="nav-brand">Discord Bot Utils</div>
+		<div class="nav-links">
+			<a href="index.html">Home</a>
+			<a href="api.html">API</a>
+			<a href="examples.html">Examples</a>
+		</div>
+	</nav>
+
+	<div class="sidebar">
+		<div class="sidebar-item">
+			<a href="#moderation-examples">Moderation Examples</a>
+			<a href="#interaction-examples">Interaction Examples</a>
+			<a href="#logging-examples">Logging Examples</a>
+			<a href="#complete-bot">Complete Bot Example</a>
+		</div>
+	</div>
+
+	<main>
+		<section id="moderation-examples">
+			<h2>Moderation Examples</h2>
+			
+			<div class="example-block">
+				<h3>Auto-Moderation System</h3>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const { ModerationUtil, LoggerUtil } = require('@zerrodevs/discord-bot-utils');
+
+client.on('messageCreate', async message => {
+	if (message.author.bot) return;
+
+	// Check for inappropriate content
+	if (message.content.includes('bad-word')) {
+		const success = await ModerationUtil.timeout(
+			message.member, 
+			300, // 5 minutes
+			'Using inappropriate language'
+		);
+
+		if (success) {
+			await LoggerUtil.log('info', 'User timed out for inappropriate language', {
+				user: message.author.tag,
+				content: message.content
+			});
+		}
+	}
+});
+					</code></pre>
+				</div>
+			</div>
+
+			<div class="example-block">
+				<h3>Message Cleanup System</h3>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+// Clear messages with specific content
+const deleted = await ModerationUtil.clearMessages(channel, 100, {
+	contains: 'spam'
+});
+
+// Clear messages from specific user
+const userDeleted = await ModerationUtil.clearMessages(channel, 50, {
+	user: targetUser
+});
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section id="interaction-examples">
+			<h2>Interaction Examples</h2>
+			
+			<div class="example-block">
+				<h3>Advanced Poll System</h3>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const { InteractionUtil } = require('@zerrodevs/discord-bot-utils');
+
+// Create a timed poll
+async function createTimedPoll(channel, duration = 3600000) { // 1 hour
+	const poll = InteractionUtil.createPoll(
+		'What\'s your favorite programming language?',
+		['JavaScript', 'Python', 'Java', 'C++']
+	);
+
+	const message = await channel.send({
+		embeds: [poll.embed],
+		components: poll.components
+	});
+
+	const votes = new Map();
+	const userVotes = new Map();
+
+	const collector = message.createMessageComponentCollector({
+		time: duration
+	});
+
+	collector.on('collect', async interaction => {
+		// Handle vote logic
+	});
+
+	collector.on('end', async () => {
+		await message.edit({
+			content: '🔒 Poll has ended!',
+			components: []
+		});
+	});
+}
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section id="logging-examples">
+			<h2>Logging Examples</h2>
+			
+			<div class="example-block">
+				<h3>Comprehensive Logging Setup</h3>
+				<div class="code-block">
+					<pre><code class="language-javascript">
+const { LoggerUtil } = require('@zerrodevs/discord-bot-utils');
+
+// Initialize logger
+await LoggerUtil.initialize({
+	logDirectory: 'logs',
+	webhookUrl: process.env.LOG_WEBHOOK_URL,
+	errorWebhookUrl: process.env.ERROR_WEBHOOK_URL,
+	maxLogAge: 7 // days
+});
+
+// Log different types of events
+await LoggerUtil.log('info', 'Bot started successfully');
+await LoggerUtil.log('warning', 'Rate limit approaching');
+await LoggerUtil.error(new Error('Database connection failed'));
+
+// Command logging wrapper
+function logCommand(command) {
+	return async (interaction) => {
+		try {
+			await command(interaction);
+			await LoggerUtil.log('info', `Command executed: ${interaction.commandName}`, {
+				user: interaction.user.tag,
+				guild: interaction.guild?.name
+			});
+		} catch (error) {
+			await LoggerUtil.error(error, {
+				command: interaction.commandName,
+				user: interaction.user.tag
+			});
+		}
+	};
+}
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<section id="complete-bot">
+			<h2>Complete Bot Example</h2>
+			<p>Check out our <a href="https://github.com/ZerroDevs/discord-bot-utils/tree/main/examples">GitHub repository</a> for complete bot examples including:</p>
+			<ul>
+				<li>Moderation bot with auto-moderation</li>
+				<li>Interactive poll system</li>
+				<li>Logging implementation</li>
+				<li>Command handling system</li>
+			</ul>
+		</section>
+	</main>
+
+	<footer>
+		<p>Created by ZerroDevs | <a href="https://github.com/ZerroDevs/discord-bot-utils">GitHub</a></p>
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

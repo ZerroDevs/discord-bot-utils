@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Discord Bot Utils Documentation</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+</head>
+<body>
+	<nav>
+		<div class="nav-brand">Discord Bot Utils</div>
+		<div class="nav-links">
+			<a href="#getting-started">Getting Started</a>
+			<a href="#features">Features</a>
+			<a href="#examples">Examples</a>
+			<a href="api.html">API</a>
+		</div>
+	</nav>
+
+	<div class="sidebar">
+		<div class="sidebar-item">
+			<a href="#installation">Installation</a>
+			<a href="#basic-usage">Basic Usage</a>
+			<a href="#moderation">Moderation Utils</a>
+			<a href="#interaction">Interaction Utils</a>
+			<a href="#logging">Logging System</a>
+			<a href="#commands">Preset Commands</a>
+		</div>
+	</div>
+
+	<main>
+		<section id="getting-started">
+			<h1>Discord Bot Utils</h1>
+			<p>A comprehensive utility package for Discord.js bots that provides advanced features and helpers.</p>
+			
+			<div class="installation-box">
+				<code>npm install @zerrodevs/discord-bot-utils</code>
+				<button onclick="copyToClipboard('npm install @zerrodevs/discord-bot-utils')" class="copy-btn">Copy</button>
+			</div>
+		</section>
+
+		<section id="features">
+			<h2>Features</h2>
+			<div class="features-grid">
+				<div class="feature-card">
+					<h3>Moderation</h3>
+					<ul>
+						<li>User timeout management</li>
+						<li>Message bulk deletion</li>
+						<li>Slowmode control</li>
+						<li>Permission validation</li>
+					</ul>
+				</div>
+				<div class="feature-card">
+					<h3>Interaction</h3>
+					<ul>
+						<li>Interactive polls</li>
+						<li>Role information</li>
+						<li>Button management</li>
+						<li>Vote tracking</li>
+					</ul>
+				</div>
+				<div class="feature-card">
+					<h3>Logging</h3>
+					<ul>
+						<li>Error tracking</li>
+						<li>Command logging</li>
+						<li>Webhook integration</li>
+						<li>File-based logs</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section id="examples">
+			<h2>Quick Examples</h2>
+			<div class="code-block">
+				<h3>Moderation Example</h3>
+				<pre><code class="language-javascript">
+const { ModerationUtil } = require('@zerrodevs/discord-bot-utils');
+
+// Timeout a user
+await ModerationUtil.timeout(member, 3600, 'Breaking rules');
+
+// Clear messages
+await ModerationUtil.clearMessages(channel, 100, {
+	user: targetUser,
+	contains: 'spam'
+});
+				</code></pre>
+			</div>
+
+			<div class="code-block">
+				<h3>Poll Example</h3>
+				<pre><code class="language-javascript">
+const { InteractionUtil } = require('@zerrodevs/discord-bot-utils');
+
+// Create a poll
+const poll = InteractionUtil.createPoll('What\'s your favorite color?', 
+	['Red', 'Blue', 'Green']
+);
+
+const message = await channel.send({
+	embeds: [poll.embed],
+	components: poll.components
+});
+				</code></pre>
+			</div>
+		</section>
+
+		<section id="installation">
+			<h2>Installation</h2>
+			<p>Install the package using npm:</p>
+			<div class="installation-box">
+				<code>npm install @zerrodevs/discord-bot-utils</code>
+				<button onclick="copyToClipboard('npm install @zerrodevs/discord-bot-utils')" class="copy-btn">Copy</button>
+			</div>
+		</section>
+
+		<section id="basic-usage">
+			<h2>Basic Usage</h2>
+			<div class="code-block">
+				<pre><code class="language-javascript">
+const { ModerationUtil, InteractionUtil, LoggerUtil } = require('@zerrodevs/discord-bot-utils');
+
+// Initialize logger
+await LoggerUtil.initialize({
+	logDirectory: 'logs',
+	webhookUrl: process.env.LOG_WEBHOOK_URL
+});
+
+// Use utilities
+client.on('ready', () => {
+	LoggerUtil.log('info', 'Bot is ready!');
+});
+				</code></pre>
+			</div>
+		</section>
+
+		<section id="moderation">
+			<h2>Moderation Utils</h2>
+			<div class="code-block">
+				<pre><code class="language-javascript">
+// Timeout example
+await ModerationUtil.timeout(member, 3600, 'Breaking rules');
+
+// Clear messages example
+await ModerationUtil.clearMessages(channel, 100, {
+	user: targetUser,
+	contains: 'spam'
+});
+				</code></pre>
+			</div>
+		</section>
+
+		<section id="interaction">
+			<h2>Interaction Utils</h2>
+			<div class="code-block">
+				<pre><code class="language-javascript">
+// Create poll
+const poll = InteractionUtil.createPoll('Question?', ['Yes', 'No']);
+
+// Get role info
+const roleInfo = await InteractionUtil.getRoleInfo(role);
+				</code></pre>
+			</div>
+		</section>
+
+		<section id="logging">
+			<h2>Logging System</h2>
+			<div class="code-block">
+				<pre><code class="language-javascript">
+// Initialize logger
+await LoggerUtil.initialize({
+	logDirectory: 'logs',
+	webhookUrl: 'your-webhook-url'
+});
+
+// Log events
+await LoggerUtil.log('info', 'Operation successful');
+await LoggerUtil.error(error, { context: 'Command execution' });
+				</code></pre>
+			</div>
+		</section>
+
+		<section id="commands">
+			<h2>Preset Commands</h2>
+			<div class="code-block">
+				<pre><code class="language-javascript">
+const { PresetCommands } = require('@zerrodevs/discord-bot-utils');
+
+// Get all preset commands
+const commands = PresetCommands.getPresetCommands();
+
+// Handle commands
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+	
+	switch(interaction.commandName) {
+		case 'timeout':
+			await PresetCommands.handleTimeout(interaction);
+			break;
+		case 'poll':
+			await PresetCommands.handlePoll(interaction);
+			break;
+	}
+});
+				</code></pre>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<p>Created by ZerroDevs | <a href="https://github.com/ZerroDevs/discord-bot-utils">GitHub</a></p>
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
