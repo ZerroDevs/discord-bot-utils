@@ -215,12 +215,54 @@ function logCommand(command) {
 		</section>
 	</main>
 
+	<!-- Share Button -->
+	<button class="share-button" onclick="shareContent()">
+		<i class="fas fa-share-alt"></i>
+	</button>
+
 	<footer>
-		<p>Created by ZerroDevs | <a href="https://github.com/ZerroDevs/discord-bot-utils">GitHub</a></p>
+		<div class="footer-content">
+			<div class="footer-links">
+				<a href="https://github.com/ZerroDevs/discord-bot-utils" target="_blank">GitHub Repository</a>
+				<a href="https://www.npmjs.com/package/@zerrodevs/discord-bot-utils" target="_blank">NPM Package</a>
+				<a href="https://github.com/ZerroDevs/discord-bot-utils/discussions" target="_blank">Community Discussions</a>
+				<a href="https://github.com/ZerroDevs" target="_blank">ZerroDevs</a>
+			</div>
+			<div class="footer-copyright">
+				© 2023 ZerroDevs. Development by <a href="https://github.com/ZerroDevs" target="_blank">ZerroDevs</a>
+			</div>
+		</div>
 	</footer>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+	function shareContent() {
+		if (navigator.share) {
+			navigator.share({
+				title: 'Discord Bot Utils Examples',
+				text: 'Check out these practical examples for Discord.js utility package!',
+				url: window.location.href
+			})
+			.catch(console.error);
+		} else {
+			// Fallback: Copy URL to clipboard
+			navigator.clipboard.writeText(window.location.href)
+				.then(() => {
+					const notification = document.createElement('div');
+					notification.className = 'notification';
+					notification.textContent = 'URL copied to clipboard!';
+					document.body.appendChild(notification);
+					setTimeout(() => notification.classList.add('show'), 10);
+					setTimeout(() => {
+						notification.classList.remove('show');
+						setTimeout(() => notification.remove(), 300);
+					}, 2000);
+				})
+				.catch(console.error);
+		}
+	}
+	</script>
 </body>
 </html>
