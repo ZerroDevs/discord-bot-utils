@@ -1,17 +1,50 @@
+// Add scroll progress indicator
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+document.body.appendChild(progressBar);
+
+// Update scroll progress
+window.addEventListener('scroll', () => {
+	const windowHeight = document.documentElement.clientHeight;
+	const fullHeight = document.documentElement.scrollHeight;
+	const scrolled = window.scrollY;
+	const progress = scrolled / (fullHeight - windowHeight);
+	progressBar.style.transform = `scaleX(${progress})`;
+});
+
+// Section visibility observer
+const observerOptions = {
+	root: null,
+	rootMargin: '0px',
+	threshold: 0.1
+};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+			entry.target.classList.add('visible');
+		}
+	});
+}, observerOptions);
+
+// Observe all sections
+document.querySelectorAll('section').forEach(section => {
+	sectionObserver.observe(section);
+});
+
 // Update scroll spy functionality
 function updateActiveSection() {
 	const sections = document.querySelectorAll('section');
 	const navLinks = document.querySelectorAll('.nav-links a');
 	const sidebarLinks = document.querySelectorAll('.sidebar-item a');
+	const scrollPosition = window.scrollY + 100;
 
 	sections.forEach(section => {
-		const sectionTop = section.offsetTop - 100;
+		const sectionTop = section.offsetTop;
 		const sectionHeight = section.clientHeight;
-		const scrollPosition = window.scrollY;
+		const currentId = section.getAttribute('id');
 
 		if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-			const currentId = section.getAttribute('id');
-
 			// Update nav links
 			navLinks.forEach(link => {
 				link.classList.remove('active');
@@ -34,16 +67,17 @@ function updateActiveSection() {
 // Add scroll event listener
 window.addEventListener('scroll', updateActiveSection);
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-	anchor.addEventListener('click', function (e) {
-		e.preventDefault();
-		const targetId = this.getAttribute('href').slice(1);
-		const targetElement = document.getElementById(targetId);
+// Enhanced smooth scroll for all anchor links including sidebar
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+	link.addEventListener('click', e => {
+		const targetId = link.getAttribute('href');
+		if (targetId === '#') return;
 		
-		if (targetElement) {
-			const headerOffset = 70;
-			const elementPosition = targetElement.getBoundingClientRect().top;
+		e.preventDefault();
+		const target = document.querySelector(targetId);
+		if (target) {
+			const headerOffset = 80;
+			const elementPosition = target.getBoundingClientRect().top;
 			const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
 			window.scrollTo({
@@ -52,8 +86,24 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 			});
 
 			// Update URL without jumping
-			history.pushState(null, null, `#${targetId}`);
+			history.pushState(null, null, targetId);
+			
+			// Update active states
+			if (link.closest('.sidebar-item')) {
+				document.querySelectorAll('.sidebar-item a').forEach(l => l.classList.remove('active'));
+				link.classList.add('active');
+			}
 		}
+	});
+});
+
+// Specific handling for sidebar links
+document.querySelectorAll('.sidebar-item a').forEach(link => {
+	link.addEventListener('click', (e) => {
+		// Remove active class from all sidebar links
+		document.querySelectorAll('.sidebar-item a').forEach(l => l.classList.remove('active'));
+		// Add active class to clicked link
+		link.classList.add('active');
 	});
 });
 

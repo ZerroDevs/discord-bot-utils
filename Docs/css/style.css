@@ -113,7 +113,7 @@ nav {
 	color: var(--text-color);
 	text-decoration: none;
 	padding: 0.8rem 0;
-	transition: color 0.3s;
+	transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 	border-left: 3px solid transparent;
 	padding-left: 1rem;
 }
@@ -122,13 +122,54 @@ nav {
 .sidebar-item a.active {
 	color: var(--primary-color);
 	border-left-color: var(--primary-color);
-	background-color: rgba(88, 101, 242, 0.1);
+	transform: translateX(8px);
+	background: linear-gradient(90deg, rgba(88, 101, 242, 0.1), transparent);
 }
 
 main {
 	margin-left: 250px;
 	margin-top: 60px;
 	padding: 2rem;
+	scroll-snap-type: y proximity;
+	scroll-padding-top: 80px;
+}
+
+/* Scroll indicators */
+.scroll-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: linear-gradient(to right, var(--primary-color), #7289da);
+	transform-origin: 0 50%;
+	transform: scaleX(0);
+	transition: transform 0.1s ease;
+	z-index: 1000;
+}
+
+.scroll-indicator {
+	position: fixed;
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 3px;
+	height: 100px;
+	background: rgba(88, 101, 242, 0.1);
+	border-radius: 3px;
+	z-index: 1000;
+}
+
+.scroll-indicator::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: var(--scroll-percentage, 0%);
+	background: linear-gradient(to bottom, var(--primary-color), #7289da);
+	border-radius: 3px;
+	transition: height 0.1s ease;
 }
 
 /* Smooth scroll behavior */
@@ -137,10 +178,22 @@ html {
 	scroll-padding-top: 70px; /* Account for fixed header */
 }
 
+/* Enhanced section transitions */
 section {
 	margin-bottom: 4rem;
 	padding-top: 60px; /* Account for fixed nav */
 	margin-top: -60px; /* Offset padding for smooth scroll */
+	opacity: 0;
+	transform: translateY(30px);
+	transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+	scroll-snap-align: start;
+	scroll-margin-top: 80px;
+	will-change: transform, opacity;
+}
+
+section.visible {
+	opacity: 1;
+	transform: translateY(0);
 }
 
 h1 {
@@ -667,5 +720,84 @@ footer {
 	
 	footer {
 		margin-left: 0;
+	}
+}
+
+/* Enhanced Custom Scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--background-color);
+	border-radius: 8px;
+	margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(45deg, var(--primary-color), #7289da);
+	border-radius: 8px;
+	border: 2px solid var(--background-color);
+	transition: all 0.3s ease;
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(45deg, #7289da, var(--primary-color));
+	box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/* Sidebar scrollbar */
+.sidebar::-webkit-scrollbar {
+	width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+	margin: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+	border: 1px solid var(--secondary-color);
+}
+
+/* Code block scrollbar */
+.code-block::-webkit-scrollbar {
+	height: 6px;
+}
+
+.code-block::-webkit-scrollbar-track {
+	margin: 2px;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+	border: 1px solid var(--code-background);
+}
+
+/* Firefox scrollbar - more refined */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--primary-color) transparent;
+}
+
+/* Smooth scrolling for the whole page */
+html {
+	scroll-behavior: smooth;
+	scroll-padding: 2rem;
+}
+
+/* Hide scrollbar on mobile */
+@media (max-width: 768px) {
+	::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+	
+	::-webkit-scrollbar-thumb {
+		border-width: 1px;
 	}
 }
