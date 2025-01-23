@@ -901,16 +901,31 @@
 		<i class="fas fa-share-alt"></i>
 	</button>
 
+	<!-- Back to Top Button -->
+	<button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">
+		<i class="fas fa-arrow-up"></i>
+	</button>
+
 	<footer>
 		<div class="footer-content">
 			<div class="footer-links">
-				<a href="https://github.com/ZerroDevs/discord-bot-utils" target="_blank">GitHub Repository</a>
-				<a href="https://www.npmjs.com/package/@zerrodevs/discord-bot-utils" target="_blank">NPM Package</a>
-				<a href="https://github.com/ZerroDevs/discord-bot-utils/discussions" target="_blank">Community Discussions</a>
-				<a href="https://github.com/ZerroDevs" target="_blank">ZerroDevs</a>
+				<a href="https://github.com/ZerroDevs/discord-bot-utils" target="_blank">
+					<i class="fab fa-github"></i> GitHub Repository
+				</a>
+				<a href="https://www.npmjs.com/package/@zerrodevs/discord-bot-utils" target="_blank">
+					<i class="fab fa-npm"></i> NPM Package
+				</a>
+				<a href="https://github.com/ZerroDevs/discord-bot-utils/discussions" target="_blank">
+					<i class="fas fa-comments"></i> Community Discussions
+				</a>
+				<a href="https://github.com/ZerroDevs" target="_blank">
+					<i class="fas fa-code"></i> ZerroDevs
+				</a>
 			</div>
 			<div class="footer-copyright">
 				© 2023 ZerroDevs. Development by <a href="https://github.com/ZerroDevs" target="_blank">ZerroDevs</a>
+				<br>
+				<small>Made with <i class="fas fa-heart" style="color: #ff4d4d;"></i> for the Discord.js community</small>
 			</div>
 		</div>
 	</footer>
@@ -919,6 +934,25 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
 	<script src="js/main.js"></script>
 	<script>
+	// Back to top functionality
+	const backToTopButton = document.querySelector('.back-to-top');
+
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 300) {
+			backToTopButton.classList.add('visible');
+		} else {
+			backToTopButton.classList.remove('visible');
+		}
+	});
+
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+
+	// Enhanced share functionality
 	function shareContent() {
 		if (navigator.share) {
 			navigator.share({
@@ -926,24 +960,43 @@
 				text: 'Check out the complete parameter documentation for Discord.js utility package!',
 				url: window.location.href
 			})
+			.then(() => showNotification('Successfully shared!', 'check'))
 			.catch(console.error);
 		} else {
-			// Fallback: Copy URL to clipboard
 			navigator.clipboard.writeText(window.location.href)
-				.then(() => {
-					const notification = document.createElement('div');
-					notification.className = 'notification';
-					notification.textContent = 'URL copied to clipboard!';
-					document.body.appendChild(notification);
-					setTimeout(() => notification.classList.add('show'), 10);
-					setTimeout(() => {
-						notification.classList.remove('show');
-						setTimeout(() => notification.remove(), 300);
-					}, 2000);
-				})
-				.catch(console.error);
+				.then(() => showNotification('URL copied to clipboard!', 'copy'))
+				.catch(() => showNotification('Failed to copy URL', 'times'));
 		}
 	}
+
+	function showNotification(message, icon) {
+		const notification = document.createElement('div');
+		notification.className = 'notification';
+		notification.innerHTML = `
+			<i class="fas fa-${icon}"></i>
+			${message}
+		`;
+		document.body.appendChild(notification);
+		setTimeout(() => notification.classList.add('show'), 10);
+		setTimeout(() => {
+			notification.classList.remove('show');
+			setTimeout(() => notification.remove(), 300);
+		}, 2000);
+	}
+
+	// Copy code blocks
+	document.querySelectorAll('.code-block').forEach(block => {
+		const copyBtn = document.createElement('button');
+		copyBtn.className = 'code-copy-btn';
+		copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+		copyBtn.onclick = () => {
+			const code = block.querySelector('code').innerText;
+			navigator.clipboard.writeText(code)
+				.then(() => showNotification('Code copied to clipboard!', 'check'))
+				.catch(() => showNotification('Failed to copy code', 'times'));
+		};
+		block.appendChild(copyBtn);
+	});
 	</script>
 </body>
 </html>

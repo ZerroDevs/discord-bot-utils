@@ -508,79 +508,164 @@ footer a {
 	}
 }
 
-/* Share button styles */
+/* Enhanced Share Button */
 .share-button {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 99;
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	transform: none;
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+	z-index: 99;
 }
 
 .share-button:hover {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+	transform: translateY(-5px);
+	box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+	background-color: #4752c4;
 }
 
-/* Improved footer styles */
+.share-button i {
+	font-size: 1.5rem;
+	transition: transform 0.3s ease;
+}
+
+.share-button:hover i {
+	transform: scale(1.1);
+}
+
+/* Enhanced Footer */
 footer {
-    margin-left: 250px;
-    padding: 2rem;
-    text-align: center;
-    background-color: var(--secondary-color);
-    border-top: 1px solid var(--border-color);
+	margin-left: 250px;
+	padding: 3rem 2rem;
+	background-color: var(--secondary-color);
+	border-top: 1px solid var(--border-color);
+	position: relative;
 }
 
 .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	display: grid;
+	gap: 2rem;
 }
 
 .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1.5rem;
+	text-align: center;
 }
 
 .footer-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color 0.3s;
+	color: var(--text-color);
+	text-decoration: none;
+	transition: all 0.3s ease;
+	padding: 0.5rem 1rem;
+	border-radius: 4px;
+	background-color: rgba(88, 101, 242, 0.1);
 }
 
 .footer-links a:hover {
-    color: var(--primary-color);
+	color: var(--primary-color);
+	background-color: rgba(88, 101, 242, 0.2);
+	transform: translateY(-2px);
 }
 
 .footer-copyright {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    opacity: 0.8;
+	text-align: center;
+	font-size: 0.9rem;
+	color: var(--text-color);
+	opacity: 0.8;
+	padding-top: 1rem;
+	border-top: 1px solid var(--border-color);
+}
+
+.footer-copyright a {
+	color: var(--primary-color);
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.footer-copyright a:hover {
+	text-decoration: underline;
+}
+
+/* Back to Top Button */
+.back-to-top {
+	position: fixed;
+	right: 20px;
+	bottom: 90px;
+	background-color: var(--primary-color);
+	color: white;
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+	z-index: 99;
+}
+
+.back-to-top.visible {
+	opacity: 1;
+	visibility: visible;
+}
+
+.back-to-top:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Enhanced notification */
+.notification {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	padding: 1rem 2rem;
+	background-color: var(--primary-color);
+	color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+	transform: translateY(100px);
+	opacity: 0;
+	transition: all 0.3s ease;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.notification.show {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.notification i {
+	font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
-    .footer-links {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    footer {
-        margin-left: 0;
-    }
+	.footer-links {
+		grid-template-columns: 1fr;
+	}
+	
+	footer {
+		margin-left: 0;
+	}
 }
